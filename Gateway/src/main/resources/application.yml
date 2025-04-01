@@ -1,0 +1,40 @@
+server:
+  port: 7777
+
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8888/eureka
+
+
+spring:
+  application:
+    name: Gateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: route1
+          predicates:
+            - Path=/ms-auth/**
+          filters:
+            - RewritePath=/ms-auth/(?<s>.*), /${s}
+          uri: lb://user-auth-service
+
+
+#        - id: route2
+#          predicates:
+#            - Path=/service-ordonnance/**
+#          filters:
+#            - RewritePath=/service-ordonnance/(?<s>.*), /${s}
+#          uri: lb://ms-ordonnance
+#
+#        - id: route3
+#          predicates:
+#            - Path=/service-remboursement/**
+#          filters:
+#            - RewritePath=/service-remboursement/(?<s>.*), /${s}
+#          uri: lb://ms-remboursement
