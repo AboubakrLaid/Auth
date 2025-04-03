@@ -82,7 +82,7 @@ public class AuthController {
             User user = authRepository.findByEmail(loginDTO.getEmail());
 
             if (!verifficationCodeService.isEmailVerified(user)) {
-                return ResponseHandler.generateErrorResponse("Please verify your email before logging in.", HttpStatus.UNAUTHORIZED);
+                return ResponseHandler.generateErrorResponse("Please verify your email before logging in.", HttpStatus.FORBIDDEN);
             }
 
             String jwt = jwtUtil.generateToken(userDetails.getUsername());

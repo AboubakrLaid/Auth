@@ -20,8 +20,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Autowired
-    private JWTFilter jwtFilter;
+//    @Autowired
+//    private JWTFilter jwtFilter;
 
     @Autowired
     private UserInfoConfigManager userInfoConfigManager;
@@ -42,6 +42,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
     return http
             .csrf(AbstractHttpConfigurer::disable)  // Disable CSRF (optional, depends on your use case)
             .authorizeHttpRequests(auth -> auth
+                    .requestMatchers(AppConstants.PUBLIC_URLS).permitAll()
                     .anyRequest().permitAll()  // Allow all requests without authentication
             )
             .build();
